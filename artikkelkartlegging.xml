@@ -1,0 +1,515 @@
+<mapping_schemas publication="bt" publicationId="1"
+    unhandledCmsTypes="link[metadata:group=TEASERREL],link[metadata:group=TOPMEDIAREL],link[metadata:group=PICTUREREL],link[metadata:group=STORYREL],link[metadata:group=POLLREL],link[rel=edit-media]"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/Developer/Newspilot/mapping_schemas.xsd">
+    <!-- NEWS -->
+    <mapping_schema cmsType="news" npType="article_part" npTypeId="1" primary="true">
+        <!-- State -->
+        <mapping displayName="Status" mandatory="true" type="user_data">
+            <np_element id="ud_state" type="String"/>
+            <cms_element id="app:control" type="state"/>
+        </mapping>
+        <!-- section_id - OUT -->
+        <mapping displayName="Avdelning" mandatory="true" mode="out" type="section">
+            <np_element id="section_id" type="String"/>
+            <cms_element id="link" type="link[relation/home-section]"/>
+        </mapping>
+        <mapping displayName="Avdelning" mandatory="true" type="section">
+            <np_element id="section_id" type="String"/>
+            <cms_element id="metadata:publication/link" type="link[relation/home-section]"/>
+        </mapping>
+        <!-- sections -->
+        <mapping displayName="Övriga avdelningar" mandatory="false" type="section">
+            <np_element id="sections" type="List"/>
+            <cms_element id="metadata:publication/link" type="link[relation/section]"/>
+        </mapping>
+        <!-- Paywall -->
+        <mapping displayName="Paywall" mandatory="false" type="user_data">
+            <np_element id="ece_paywall" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=PAYWALLSETTING]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Comment -->
+        <mapping displayName="Kommentarfelt" mandatory="false" type="user_data">
+            <np_element id="ece_comment" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=ACTIVATEDEBATE]/vdf:value" type="String"/>
+        </mapping>
+        <!-- To Newspilot - OUT -->
+        <mapping displayName="To Newspilot" mandatory="false" mode="out" type="static">
+            <np_element id="na" type="String">true</np_element>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=TONEWSPILOT]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Pub Start IN -->
+        <mapping displayName="Publiceringsdatum" mandatory="false"
+            mode="in" type="article">
+            <np_element id="pub_start" type="Date">yyyy-MM-dd'T'HH:mm:ssZ</np_element>
+            <cms_element id="published" type="String">yyyy-MM-dd'T'HH:mm:ss</cms_element>
+        </mapping>
+        <!-- Headline -->
+        <mapping displayName="Titel" mandatory="true" type="data">
+            <np_element
+                conversion_rules="strip_all_p_tags,strip_all_b_tags,strip_all_i_tags,headline_conversions"
+                id="headline" type="String"/>
+            <cms_element id="title" type="String"/>
+        </mapping>
+        <!-- Name (article) - IN -->
+        <mapping displayName="Artikel namn" mandatory="true" mode="in" type="article">
+            <np_element id="name" type="String"/>
+            <cms_element id="title" type="String"/>
+        </mapping>
+        <!-- Publication:Static - OUT -->
+        <mapping displayName="Publikation" mandatory="true" mode="out" type="static">
+            <np_element id="publication" type="String">bt</np_element>
+            <cms_element id="link" type="link[relation/publication]"/>
+        </mapping>
+        <!-- Leadin -->
+        <mapping displayName="Leadin" mandatory="false" type="data">
+            <np_element
+                conversion_rules="strip_all_p_tags,strip_all_b_tags,strip_all_i_tags,leadin_conversions"
+                id="leadin" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=LEADTEXT]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Preleadin (Hovedingress) -->
+        <mapping displayName="Hovedingress" mandatory="false" type="data">
+            <np_element conversion_rules="text_export,strip_all_p_tags"
+                id="preleadin" type="String"/>
+            <cms_element conversion_rules="text_import"
+                id="content/vdf:payload/vdf:field[name=INTERNALMESSAGE]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Body -->
+        <mapping displayName="Brödtext" mandatory="false" type="data">
+            <np_element conversion_rules="body_conversions" id="body" type="String"/>
+            <cms_element conversion_rules="body_conversion_import"
+                id="content/vdf:payload/vdf:field[name=BODYTEXT]/vdf:value" type="HTML"/>
+        </mapping>
+        <!-- Image - Reference -->
+        <mapping cmsTypes="picture"
+            displayName="Referensmappning - Bild" isInline="false"
+            mandatory="true" nrCmsInstances="30" refId="picture" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="link" type="related"/>
+            <relation_mapping_schema cmsType="TOPMEDIAREL">
+                <mapping displayName="Relationsmappning - Bild (name)"
+                    mandatory="false" type="image">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="name" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=TITLE]/vdf:value" type="String"/>
+                </mapping>
+                <mapping
+                    displayName="Relationsmappning - Bild (caption)"
+                    mandatory="false" type="data">
+                    <np_element
+                        conversion_rules="strip_all_p_tags,body_conversions"
+                        id="caption" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=CAPTION]/vdf:value" type="String"/>
+                </mapping>
+                <!--  Fotograf -->
+                <!--
+                <mapping cmsTypes="person"
+                    displayName="Referensmappning - Byline"
+                    isInline="false" mandatory="false"
+                    nrCmsInstances="5" refId="photographer" type="reference">
+                    <np_element id="na" type="List"/>
+                    <cms_element id="na" type="na"/>
+                    <relation_mapping_schema cmsType="PERSON"/>
+                </mapping>
+-->
+            </relation_mapping_schema>
+        </mapping>
+        <!-- Content - Reference -->
+        <mapping cmsTypes="plainvideo"
+            displayName="Referensmappning - Video" isInline="false"
+            mandatory="false" nrCmsInstances="1" refId="video" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="link" type="related"/>
+            <relation_mapping_schema cmsType="VIDEOTABRELATIONS">
+                <mapping displayName="Relationsmappning - Video (name)"
+                    mandatory="false" type="content">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="name" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=TITLE]/vdf:value" type="String"/>
+                </mapping>
+                <mapping
+                    displayName="Relationsmappning - Video (caption)"
+                    mandatory="false" type="data">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="caption" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=CAPTION]/vdf:value" type="String"/>
+                </mapping>
+            </relation_mapping_schema>
+        </mapping>
+        <!-- Faktarutor - Reference -->
+        <mapping cmsTypes="factbox"
+            displayName="Referensmappning - Faktaruta" isInline="false"
+            mandatory="false" nrCmsInstances="5" refId="fact" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="link" type="related"/>
+            <relation_mapping_schema cmsType="FACTBOXREL">
+                <mapping
+                    displayName="Relationsmappning - Faktaruta (name)"
+                    mandatory="false" type="data">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="drophead" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=TITLE]/vdf:value" type="String"/>
+                </mapping>
+                <mapping
+                    displayName="Relationsmappning - Faktaruta (leadin)"
+                    mandatory="false" type="data">
+                    <np_element
+                        conversion_rules="insert_bullet_points,strip_all_p_tags"
+                        id="body" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=BODYTEXT]/vdf:value" type="String"/>
+                </mapping>
+            </relation_mapping_schema>
+        </mapping>
+        <!-- Byline - Reference -->
+        <mapping cmsTypes="person"
+            displayName="Referensmappning - Byline" isInline="false"
+            mandatory="false" nrCmsInstances="5" refId="person" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="na" type="na"/>
+            <relation_mapping_schema cmsType="PERSON"/>
+        </mapping>
+    </mapping_schema>
+    <!-- REVIEW -->
+    <mapping_schema cmsType="review" npArticleTypeId="450"
+        npType="article_part" npTypeId="1" primary="true">
+        <!-- State -->
+        <mapping displayName="Status" mandatory="true" type="user_data">
+            <np_element id="ud_state" type="String"/>
+            <cms_element id="app:control" type="state"/>
+        </mapping>
+        <!-- section_id - OUT -->
+        <mapping displayName="Avdelning" mandatory="true" mode="out" type="section">
+            <np_element id="section_id" type="String"/>
+            <cms_element id="link" type="link[relation/home-section]"/>
+        </mapping>
+        <mapping displayName="Avdelning" mandatory="true" type="section">
+            <np_element id="section_id" type="String"/>
+            <cms_element id="metadata:publication/link" type="link[relation/home-section]"/>
+        </mapping>
+        <!-- sections -->
+        <mapping displayName="Övriga avdelningar" mandatory="false" type="section">
+            <np_element id="sections" type="List"/>
+            <cms_element id="metadata:publication/link" type="link[relation/section]"/>
+        </mapping>
+        <!-- Paywall -->
+        <mapping displayName="Paywall" mandatory="false" type="user_data">
+            <np_element id="ece_paywall" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=PAYWALLSETTING]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Comment -->
+        <mapping displayName="Kommentarfelt" mandatory="false" type="user_data">
+            <np_element id="ece_comment" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=ACTIVATEDEBATE]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Reviewtype -->
+        <mapping displayName="Anmeldelsestype" mandatory="false" type="user_data">
+            <np_element id="ece_reviewtype" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=REVIEWTYPE]/vdf:value" type="String"/>
+        </mapping>
+        <!-- To Newspilot - OUT -->
+        <mapping displayName="To Newspilot" mandatory="false" mode="out" type="static">
+            <np_element id="na" type="String">true</np_element>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=TONEWSPILOT]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Publiceringsdatum/updated -->
+        <mapping displayName="Publiceringsdatum" mandatory="false" type="article">
+            <np_element id="pub_start" type="Date">yyyy-MM-dd'T'HH:mm:ssZ</np_element>
+            <cms_element id="updated" type="String">yyyy-MM-dd'T'HH:mm:ss</cms_element>
+        </mapping>
+        <!-- Headline -->
+        <mapping displayName="Titel" mandatory="true" type="data">
+            <np_element
+                conversion_rules="strip_all_p_tags,headline_conversions"
+                id="headline" type="String"/>
+            <cms_element id="title" type="String"/>
+        </mapping>
+        <!-- Name (article) - IN -->
+        <mapping displayName="Artikel namn" mandatory="true" mode="in" type="article">
+            <np_element id="name" type="String"/>
+            <cms_element id="title" type="String"/>
+        </mapping>
+        <!-- Publication:Static - OUT -->
+        <mapping displayName="Publikation" mandatory="true" mode="out" type="static">
+            <np_element id="publication" type="String">bt</np_element>
+            <cms_element id="link" type="link[relation/publication]"/>
+        </mapping>
+        <!-- Leadin (Omtale) -->
+        <mapping displayName="Leadin" mandatory="false" type="data">
+            <np_element
+                conversion_rules="text_export,replace_p_tag_with_comma,strip_all_p_tags"
+                id="leadin" type="String"/>
+            <cms_element conversion_rules="text_import"
+                id="content/vdf:payload/vdf:field[name=REVIEWPERFORMER]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Preleadin (Hovedingress) -->
+        <mapping displayName="Hovedingress" mandatory="false" type="data">
+            <np_element conversion_rules="text_export,strip_all_p_tags"
+                id="preleadin" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=LEADTEXT]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Body -->
+        <mapping displayName="Brödtext" mandatory="false" type="data">
+            <np_element conversion_rules="body_conversions" id="body" type="String"/>
+            <cms_element conversion_rules="body_conversion_import"
+                id="content/vdf:payload/vdf:field[name=BODYTEXT]/vdf:value" type="HTML"/>
+        </mapping>
+        <!-- Pagedateline (Vinjett) -->
+        <mapping displayName="Vinjett" mandatory="false" type="data">
+            <np_element conversion_rules="text_export,strip_all_p_tags"
+                id="pagedateline" type="String"/>
+            <cms_element conversion_rules="text_import"
+                id="content/vdf:payload/vdf:field[name=RATINGTITLE]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Madmansrow (Navn, titel och förlag) -->
+        <mapping displayName="Navn, titel och förlag" mandatory="false" type="data">
+            <np_element
+                conversion_rules="text_export,strip_all_p_tags,strip_all_quotes"
+                id="madmansrow" type="String"/>
+            <cms_element conversion_rules="text_import"
+                id="content/vdf:payload/vdf:field[name=REVIEWSUBJECTTITLE]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Drophead (Poeng) -->
+        <mapping displayName="Poeng" mandatory="false" type="data">
+            <np_element conversion_rules="strip_all_p_tags,hjerter"
+                id="drophead" type="String"/>
+            <cms_element conversion_rules="text_import"
+                id="content/vdf:payload/vdf:field[name=SCORE]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Image - Reference -->
+        <mapping cmsTypes="picture"
+            displayName="Referensmappning - Bild" isInline="false"
+            mandatory="true" nrCmsInstances="30" refId="picture" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="link" type="related"/>
+            <relation_mapping_schema cmsType="PICTUREREL">
+                <mapping displayName="Relationsmappning - Bild (name)"
+                    mandatory="false" type="image">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="name" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=TITLE]/vdf:value" type="String"/>
+                </mapping>
+                <mapping
+                    displayName="Relationsmappning - Bild (caption)"
+                    mandatory="false" type="data">
+                    <np_element
+                        conversion_rules="strip_all_p_tags,body_conversions"
+                        id="caption" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=CAPTION]/vdf:value" type="String"/>
+                </mapping>
+            </relation_mapping_schema>
+        </mapping>
+        <!-- Content - Reference -->
+        <mapping cmsTypes="plainvideo"
+            displayName="Referensmappning - Video" isInline="false"
+            mandatory="false" nrCmsInstances="1" refId="video" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="link" type="related"/>
+            <relation_mapping_schema cmsType="VIDEOTABRELATIONS">
+                <mapping displayName="Relationsmappning - Video (name)"
+                    mandatory="false" type="content">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="name" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=TITLE]/vdf:value" type="String"/>
+                </mapping>
+                <mapping
+                    displayName="Relationsmappning - Video (caption)"
+                    mandatory="false" type="data">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="caption" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=CAPTION]/vdf:value" type="String"/>
+                </mapping>
+            </relation_mapping_schema>
+        </mapping>
+        <!-- Faktarutor - Reference -->
+        <mapping cmsTypes="factbox"
+            displayName="Referensmappning - Faktaruta" isInline="false"
+            mandatory="false" nrCmsInstances="5" refId="fact" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="link" type="related"/>
+            <relation_mapping_schema cmsType="FACTBOXREL">
+                <mapping
+                    displayName="Relationsmappning - Faktaruta (name)"
+                    mandatory="false" type="data">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="headline" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=TITLE]/vdf:value" type="String"/>
+                </mapping>
+                <mapping
+                    displayName="Relationsmappning - Faktaruta (leadin)"
+                    mandatory="false" type="data">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="body" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=BODYTEXT]/vdf:value" type="String"/>
+                </mapping>
+            </relation_mapping_schema>
+        </mapping>
+        <!-- Byline - Reference -->
+        <mapping cmsTypes="person"
+            displayName="Referensmappning - Byline" isInline="false"
+            mandatory="false" nrCmsInstances="5" refId="person" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="na" type="na"/>
+            <relation_mapping_schema cmsType="PERSON"/>
+        </mapping>
+    </mapping_schema>
+    <!-- BYLINE -->
+    <mapping_schema cmsType="person" npType="byline" refId="person">
+        <mapping displayName="Byline name (text)" mandatory="false" type="base">
+            <np_element id="name" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=BYLINE]/vdf:value" type="String"/>
+        </mapping>
+        <mapping displayName="Byline email" mandatory="false" type="base">
+            <np_element id="email" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=BYLINEEMAIL]/vdf:value" type="String"/>
+        </mapping>
+    </mapping_schema>
+    <!-- PHOTOGRAPHER -->
+    <mapping_schema cmsType="person" npType="byline" refId="photographer">
+        <mapping displayName="Fotograf name" mandatory="false" type="base">
+            <np_element id="name" type="String"/>
+            <!--<cms_element
+                id="vdf:payload/vdf:field[name=PHOTOGRAPHER]/vdf:value" type="String"/>-->
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=PHOTOGRAPHER]/vdf:value" type="String"/>
+        </mapping>
+    </mapping_schema>
+    <!-- IMAGE -->
+    <mapping_schema cmsType="picture" npType="image" refId="picture">
+        <!-- Status: Static - OUT -->
+        <mapping displayName="Status" mandatory="false" mode="out" type="static">
+            <np_element id="ud_state" type="String">published</np_element>
+            <cms_element id="app:control" type="state"/>
+        </mapping>
+        <!-- File name (name/title) -->
+        <mapping displayName="Bild" mandatory="true" type="image">
+            <np_element id="name" type="String"/>
+            <cms_element id="title" type="String"/>
+        </mapping>
+        <!-- Caption -->
+        <mapping displayName="Bildtext" mandatory="false" type="data">
+            <np_element conversion_rules="strip_all_p_tags" id="caption" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=CAPTION]/vdf:value" type="String"/>
+        </mapping>
+        <!--  Fotograf -->
+        <mapping cmsTypes="person"
+            displayName="Referensmappning - Byline" isInline="false"
+            mandatory="false" nrCmsInstances="5" refId="photographer" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="na" type="na"/>
+            <relation_mapping_schema cmsType="PERSON"/>
+        </mapping>
+    </mapping_schema>
+    <!-- CONTENT -->
+    <mapping_schema cmsType="plainvideo" npType="content" refId="video">
+        <!-- State -->
+        <mapping displayName="Status" mandatory="true" type="user_data">
+            <np_element id="ud_state" type="String"/>
+            <cms_element id="app:control" type="state"/>
+        </mapping>
+        <!-- File name (name/title) -->
+        <mapping mandatory="true" type="image">
+            <np_element id="name" type="String"/>
+            <cms_element id="title" type="String"/>
+        </mapping>
+        <!-- Caption -->
+        <mapping mandatory="true" type="data">
+            <np_element conversion_rules="strip_all_p_tags" id="caption" type="String"/>
+            <cms_element
+                id="content/vdf:payload/vdf:field[name=CAPTION]/vdf:value" type="String"/>
+        </mapping>
+        <!-- Byline - Reference -->
+        <mapping cmsTypes="person"
+            displayName="Referensmappning - Byline" isInline="false"
+            mandatory="false" nrCmsInstances="2" refId="person" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="na" type="na"/>
+            <relation_mapping_schema cmsType="PERSON"/>
+        </mapping>
+    </mapping_schema>
+    <!-- FACT -->
+    <mapping_schema cmsType="factbox" npType="article_part" npTypeId="2" refId="fact">
+        <!-- Status: Static -->
+        <mapping displayName="Status" mandatory="false" mode="out" type="static">
+            <np_element id="ud_state" type="String">published</np_element>
+            <cms_element id="app:control" type="state"/>
+        </mapping>
+        <!-- Section_id -->
+        <mapping displayName="Avdelning/sektion" mandatory="true"
+            mode="out" type="section">
+            <np_element id="section_id" type="String"/>
+            <cms_element id="link" type="link[relation/home-section]"/>
+        </mapping>
+        <mapping displayName="Avdelning/sektion" mandatory="true" type="section">
+            <np_element id="section_id" type="String"/>
+            <cms_element id="metadata:publication/link" type="link[relation/home-section]"/>
+        </mapping>
+        <!-- Sections -->
+        <mapping displayName="Övriga avdelningar/sektioner"
+            mandatory="false" mode="out" type="section">
+            <np_element id="sections" type="List"/>
+            <cms_element id="metadata:publication/link" type="link[relation/section]"/>
+        </mapping>
+        <!-- Headline: Static-->
+        <mapping displayName="Titel faktaruta" mandatory="true"
+            mode="out" type="data">
+            <np_element
+                conversion_rules="strip_all_p_tags,headline_conversions"
+                id="drophead" type="String"/>
+            <cms_element id="title" type="String"/>
+        </mapping>
+        <!-- Body -->
+        <mapping displayName="Brödtext faktaruta" mandatory="true" type="data">
+            <np_element conversion_rules="body_conversions" id="body" type="String"/>
+            <cms_element conversion_rules="body_conversion_import"
+                id="content/vdf:payload/vdf:field[name=BODYTEXT]/vdf:value" type="HTML"/>
+        </mapping>
+        <!-- Image: Reference-->
+        <mapping cmsTypes="picture"
+            displayName="Referensmappning - Bild" isInline="false"
+            mandatory="false" nrCmsInstances="1" refId="picture" type="reference">
+            <np_element id="na" type="List"/>
+            <cms_element id="link" type="related"/>
+            <relation_mapping_schema cmsType="imagesRel">
+                <mapping displayName="Relationsmappning - Bild (name)"
+                    mandatory="false" type="image">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="name" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=TITLE]/vdf:value" type="String"/>
+                </mapping>
+                <mapping
+                    displayName="Relationsmappning - Bild (caption)"
+                    mandatory="false" type="data">
+                    <np_element conversion_rules="strip_all_p_tags"
+                        id="caption" type="String"/>
+                    <cms_element
+                        id="vdf:payload/vdf:field[name=CAPTION]/vdf:value" type="String"/>
+                </mapping>
+            </relation_mapping_schema>
+        </mapping>
+    </mapping_schema>
+</mapping_schemas>

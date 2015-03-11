@@ -1,0 +1,213 @@
+<text_conversions version="1.0">
+    <!-- ALL P-TAGS -->
+    <conversion_rule id="strip_all_p_tags">
+        <conversion cms_char="" np_char="&lt;p>"/>
+        <conversion cms_char="" np_char="&lt;/p>"/>
+        <conversion cms_char="" np_char="&lt;p/>"/>
+    </conversion_rule>
+    <!-- REPLACE P-TAG WITH COMMA -->
+    <conversion_rule id="replace_p_tag_with_comma">
+        <conversion cms_char=", " np_char="&lt;/p>&lt;p>"/>
+    </conversion_rule>
+    <!-- ALL B-TAGS -->
+    <conversion_rule id="strip_all_b_tags">
+        <conversion cms_char="" np_char="&lt;b>"/>
+        <conversion cms_char="" np_char="&lt;/b>"/>
+        <conversion cms_char="" np_char="&lt;b/>"/>
+    </conversion_rule>
+    <!-- STRIP QUOTES -->
+    <conversion_rule id="strip_all_quotes">
+        <conversion cms_char="" np_char="&quot;"/>
+    </conversion_rule>
+    <!-- ALL I-TAGS -->
+    <conversion_rule id="strip_all_i_tags">
+        <conversion cms_char="" np_char="&lt;i>"/>
+        <conversion cms_char="" np_char="&lt;/i>"/>
+        <conversion cms_char="" np_char="&lt;i/>"/>
+    </conversion_rule>
+    <!-- CONVERT TO BULLET POINTS -->
+    <conversion_rule id="insert_bullet_points">
+        <conversion cms_char="&lt;li>" np_char="&lt;p>"/>
+        <conversion cms_char="&lt;/li>" np_char="&lt;/p>"/>
+    </conversion_rule>
+    <!-- HEADLINE EXPORT -->
+    <conversion_rule id="headline_conversions">
+        <conversion cms_char="h2" np_char="subheadline1"/>
+        <!-- Sitatstrek -->
+        <conversion cms_char="-" np_char="–"/>
+        <!-- Sitatstreck Specialtecken -->
+        <conversion cms_char="- " np_char=""/>
+        <!-- Fet ingång Specialtecken -->
+        <conversion cms_char=" " np_char=""/>
+        <!-- Notis byline Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Hyretitle Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Uthevet farge Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Anførselstegn -->
+        <conversion cms_char=" «" np_char=" &quot;"/>
+        <conversion cms_char="«- " np_char="&quot;- "/>
+        <conversion cms_char="»-" np_char="&quot;-"/>
+        <conversion cms_char="» " np_char="&quot; "/>
+        <conversion cms_char="»." np_char="&quot;."/>
+        <conversion cms_char="»," np_char="&quot;,"/>
+        <conversion cms_char="»:" np_char="&quot;:"/>
+        <conversion cms_char="»!" np_char="&quot;!"/>
+        <conversion cms_char="»?" np_char="&quot;?"/>
+        <conversion cms_char="«" np_char="&quot;"/>
+    </conversion_rule>
+    <!-- BODY EXPORT -->
+    <conversion_rule id="body_conversions">
+        <!-- Mellomtittel -->
+        <conversion cms_char="h2" np_char="subheadline1"/>
+        <!-- Spesial1 -->
+        <conversion cms_char="p" np_char="subheadline2"/>
+        <!-- Anførselstegn -->
+        <conversion cms_char=" «" np_char=" &quot;"/>
+        <conversion cms_char="«- " np_char="&quot;- "/>
+        <conversion cms_char="»-" np_char="&quot;-"/>
+        <conversion cms_char="» " np_char="&quot; "/>
+        <conversion cms_char="»." np_char="&quot;."/>
+        <conversion cms_char="»," np_char="&quot;,"/>
+        <conversion cms_char="»;" np_char="&quot;;"/>
+        <conversion cms_char="»:" np_char="&quot;:"/>
+        <conversion cms_char="»!" np_char="&quot;!"/>
+        <conversion cms_char="»?" np_char="&quot;?"/>
+        <conversion cms_char="«" np_char="&quot;"/>
+        <!-- Sitatstreck Specialtecken -->
+        <conversion cms_char="- " np_char=""/>
+        <!-- Sitatstrek -->
+        <conversion cms_char="- " np_char="–"/>
+        <!-- Fet ingång Specialtecken -->
+        <conversion cms_char=" " np_char=""/>
+        <!-- Notis byline Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Hyretitle Specialtecken -->
+        <conversion cms_char=" " np_char=""/>
+        <!-- Uthevet farge Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <conversion cms_char="&lt;strong>" np_char="&lt;b>"/>
+        <conversion cms_char="&lt;/strong>" np_char="&lt;/b>"/>
+        <conversion cms_char="&lt;em>" np_char="&lt;i>"/>
+        <conversion cms_char="&lt;/em>" np_char="&lt;/i>"/>
+        <!-- Fjerner språkattributt -->
+        <conversion cms_char="" np_char=" xml:lang=&quot;nn&quot;"/>
+        <conversion cms_char="" np_char=" xml:lang=&quot;nb&quot;"/>
+    </conversion_rule>
+    <!-- BODY IMPORT-->
+    <conversion_rule id="body_conversion_import">
+        <conversion cms_char="h2" np_char="subheadline1"/>
+        <conversion cms_char="&lt;em>" np_char="&lt;i>"/>
+        <conversion cms_char="&lt;/em>" np_char="&lt;/i>"/>
+        <conversion cms_char="&lt;strong>" np_char="&lt;b>"/>
+        <conversion cms_char="&lt;/strong>" np_char="&lt;/b>"/>
+        <conversion cms_char="h3" np_char="subheadline1"/>
+        <!-- Sitatstreck Specialtecken -->
+        <conversion cms_char="- " np_char=""/>
+    </conversion_rule>
+    <!-- LEADNING EXPORT -->
+    <conversion_rule id="leadin_conversions">
+        <!-- Sitatstreck Specialtecken -->
+        <conversion cms_char="- " np_char=""/>
+        <!-- Sitatstrek -->
+        <conversion cms_char="- " np_char="–"/>
+        <!-- Fet ingång Specialtecken -->
+        <conversion cms_char=" " np_char=""/>
+        <!-- Notis byline Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Hyretitle Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Uthevet farge Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <conversion cms_char="&lt;strong>" np_char="&lt;b>"/>
+        <conversion cms_char="&lt;/strong>" np_char="&lt;/b>"/>
+        <conversion cms_char="&lt;em>" np_char="&lt;i>"/>
+        <conversion cms_char="&lt;/em>" np_char="&lt;/i>"/>
+        <!-- Anførselstegn -->
+        <conversion cms_char=" «" np_char=" &quot;"/>
+        <conversion cms_char="«- " np_char="&quot;- "/>
+        <conversion cms_char="»-" np_char="&quot;-"/>
+        <conversion cms_char="» " np_char="&quot; "/>
+        <conversion cms_char="»." np_char="&quot;."/>
+        <conversion cms_char="»," np_char="&quot;,"/>
+        <conversion cms_char="»;" np_char="&quot;;"/>
+        <conversion cms_char="»:" np_char="&quot;:"/>
+        <conversion cms_char="»!" np_char="&quot;!"/>
+        <conversion cms_char="»?" np_char="&quot;?"/>
+        <conversion cms_char="«" np_char="&quot;"/>
+        <conversion cms_char="«" np_char="&quot;"/>
+    </conversion_rule>
+    <!-- LEADING IMPORT -->
+    <conversion_rule id="leadin_conversion_import">
+        <conversion cms_char="&lt;em>" np_char="&lt;i>"/>
+        <conversion cms_char="&lt;/em>" np_char="&lt;/i>"/>
+        <conversion cms_char="&lt;strong>" np_char="&lt;b>"/>
+        <conversion cms_char="&lt;/strong>" np_char="&lt;/b>"/>
+        <!-- Sitatstreck Specialtecken -->
+        <conversion cms_char="-" np_char=""/>
+    </conversion_rule>
+    <!-- TEXT EXPORT -->
+    <conversion_rule id="text_export">
+        <!-- Sitatstreck Specialtecken -->
+        <conversion cms_char="- " np_char=""/>
+        <!-- Fet ingång Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Notis byline Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Hyretitle Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <!-- Uthevet farge Specialtecken -->
+        <conversion cms_char="" np_char=""/>
+        <conversion cms_char="&lt;strong>" np_char="&lt;b>"/>
+        <conversion cms_char="&lt;/strong>" np_char="&lt;/b>"/>
+        <conversion cms_char="&lt;em>" np_char="&lt;i>"/>
+        <conversion cms_char="&lt;/em>" np_char="&lt;/i>"/>
+    </conversion_rule>
+    <!-- TEXT IMPORT -->
+    <conversion_rule id="text_import">
+        <conversion cms_char="&lt;em>" np_char="&lt;i>"/>
+        <conversion cms_char="&lt;/em>" np_char="&lt;/i>"/>
+        <conversion cms_char="&lt;strong>" np_char="&lt;b>"/>
+        <conversion cms_char="&lt;/strong>" np_char="&lt;/b>"/>
+        <!-- Sitatstreck Specialtecken -->
+        <conversion cms_char="-" np_char=""/>
+    </conversion_rule>
+    <!-- POENG -->
+    <conversion_rule id="poeng">
+        <conversion cms_char="1" np_char=""/>
+        <conversion cms_char="2" np_char=""/>
+        <conversion cms_char="3" np_char=""/>
+        <conversion cms_char="4" np_char=""/>
+        <conversion cms_char="5" np_char=""/>
+        <conversion cms_char="6" np_char=""/>
+    </conversion_rule>
+    <!-- HJERTER -->
+    <conversion_rule id="hjerter">
+        <conversion cms_char="1" np_char="HHHHHH"/>
+        <conversion cms_char="2" np_char="HHHHHH"/>
+        <conversion cms_char="3" np_char="HHHHHH"/>
+        <conversion cms_char="4" np_char="HHHHHH"/>
+        <conversion cms_char="5" np_char="HHHHHH"/>
+        <conversion cms_char="6" np_char="HHHHHH"/>
+    </conversion_rule>
+    <!-- TERNING -->
+    <conversion_rule id="terning">
+        <conversion
+            cms_char="&lt;img alt=&quot;&quot; src=&quot;http://www.bt.no/incoming/article3114196.ece/BINARY/terning1.jpg&quot;/>" np_char="1"/>
+        <conversion
+            cms_char="&lt;img alt=&quot;&quot; src=&quot;http://www.bt.no/incoming/article3114195.ece/BINARY/terning2.jpg&quot;/>" np_char="2"/>
+        <conversion
+            cms_char="&lt;img alt=&quot;&quot; src=&quot;http://www.bt.no/incoming/article3097917.ece/BINARY/3.jpg&quot;/>" np_char="3"/>
+        <conversion
+            cms_char="&lt;img alt=&quot;&quot; src=&quot;http://www.bt.no/incoming/article3097916.ece/BINARY/4.jpg&quot;/>" np_char="4"/>
+        <conversion
+            cms_char="&lt;img alt=&quot;&quot; src=&quot;http://www.bt.no/incoming/article3097915.ece/BINARY/fem.jpg&quot;/>" np_char="5"/>
+        <conversion
+            cms_char="&lt;img alt=&quot;&quot; src=&quot;http://www.bt.no/incoming/article3097914.ece/BINARY/seks.jpg;/>" np_char="6"/>
+    </conversion_rule>
+    <!-- BYLINE -->
+    <conversion_rule id="strip_bt_journalist">
+        <conversion cms_char="" np_char="Journalist i Bergens Tidende"/>
+    </conversion_rule>
+</text_conversions>
