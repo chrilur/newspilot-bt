@@ -1,0 +1,411 @@
+<restore-settings version="1.0">
+    <restore-policy>
+        <create-new/>
+    </restore-policy>
+    <replacement-policy>
+        <restored-policy removeUnrestored="true" replace="true" selectionRemoveUnrestored="false"/>
+        <!-- Här kan man bestämma vad som ska hända med redan skapade återförda artiklar -->
+        <!-- removeUnrestored="true" gör att de tidigare återförda artiklarna på denna sidan som inte finns med på sidan vid återföringen tas bort -->
+        <!-- replace="true" gör att de som återförs igen ersätts med nya. -->
+        <!-- selectionRemoveUnrestored="false" gör att om man gör en "selection"-återföring så tas inte "gamla" återförda artiklar bort enligt removeUnrestored attributet -->
+        <original-policy replace="false" unsetPage="false"/>
+        <!-- deprecated -->
+    </replacement-policy>
+    <styles-policy>
+        <!-- Denne policyen bestemmer hvordan ulike stiler skal tilbakeføres -->
+        <bold-typeface>
+            <!-- Nedanstående bestämmer vilka typeface som ska anses vara bold -->
+            <regexp>(?i).*bold.*</regexp>
+            <regexp>(?i).*black.*</regexp>
+        </bold-typeface>
+        <italic-typeface>
+            <!-- Nedanstående bestämmer vilka typeface som ska anses vara italic -->
+            <regexp>(?i).*italic.*</regexp>
+        </italic-typeface>
+        <tags>
+            <!-- Vilka stilar ska återföras per tagg. -->
+            <!-- Inget 'styles'-attribut alls betyder att alla stilar återförs -->
+            <!--      (går även att skriva 'styles="*"' eller 'styles="all"') -->
+            <body/>
+        </tags>
+    </styles-policy>
+    <status-policy>
+        <page status-id="PAGE-STATUS-ID"/>
+        <!-- PAGE-STATUS-ID är id:t på den status som sidan ska få efter återföringen är utförd -->
+        <!-- OBS       <article status-id="ARTICLE-STATUS-ID" />  OBS deprecated, använd nedanstående istället OBS -->
+        <!-- OBS             ARTICLE-STATUS-ID är id:t på den status som den nyskapade "återförings"-artikeln ska få efter återföringen -->
+        <article>
+            <!--<source status-id="6"/>-->
+            <!-- Status på ursprungsartikeln efter återföring -->
+            <restored status-id="1002"/>
+            <!-- Status på den nya återföringsartikeln -->
+        </article>
+        <image status-id="1010"/>
+        <!-- Status på bilder (som finns på de återförda artiklarna) efter återföring -->
+    </status-policy>
+    <flag-policy>
+        <!-- Här kan man ställa in vilka flaggor som ska sättas eller tas bort på artiklar och bilder vid återföring   -->
+        <!-- Nedanstående är ganska självförklarande, attributet id är flaggans id och action kan vara set/unset       -->
+        <!-- beroende på om man vill sätta eller ta bort en flagga. Om inget eller annat anges defaultar den till set. -->
+        <!-- <article>
+                <source>
+                    <flag action="unset" id="1019"/>
+                </source>
+                <restored>
+                    <flag action="set" id="1020"/>
+                </restored>
+            </article>
+            <image>
+                <link>
+                    <flag action="set" id="1041"/>
+                </link>
+                <source>
+                    <flag action="set" id="1033"/>
+                    <flag action="unset" id="1040"/>
+                </source>
+            </image>-->
+    </flag-policy>
+    <byline-policy unmatched-action="user-info"/>
+    <!-- Beskriver hur de bylines som inte kunde matchas till en användare ska hanteras. -->
+    <!-- unmatched-action kan anta "include" och "user-info" -->
+    <!-- include: Inkludera byline texten sist i artikeldelen -->
+    <!-- user-info: Skapa en extern användar-byline -->
+    <character-mapping>
+        <!-- *************************    mapping lagt til av Christian 16. oktober 2013******************************************* -->
+        <!-- Erstatt to spesialtegn med kolon og mellomrom -->
+        <character regexp="\u00A0\u0065\u00A0" replacement=": "/>
+        <character regexp="\u00A0\u0065\u0020" replacement=": "/>
+        <!-- *************************    mapping lagt til av Christian 7. november 2013******************************************* -->
+        <!-- Tilbakefør karakter på anmeldelser -->
+        <character regexp="123\uE0044\uE00456" replacement="4"/>
+        <character regexp="1234\uE0045\uE0046" replacement="5"/>
+        <!-- *************************    mapping lagt til av Ottar 3. mai 2012******************************************* -->
+        <!-- Erstatt diverse spesialtegn med space -->
+        <character
+            regexp="[\u00A0\u000A\u2002\u2003\u2004\u2007\u2008\u2009\u200A\u2005\u2028]" replacement=" "/>
+        <!--Fjern diverse spesialtegn -->
+        <character regexp="[\u2713\u2714\u2022\u2724\u25A0]" replacement=""/>
+        <!--Erstatt lang tankestreker med kort -->
+        <character regexp="[\u2013\u2014]" unicode="002D"/>
+        <!-- Endre dobbeltspacer til enkle spacer -->
+        <character regexp="  +" replacement=" "/>
+        <!-- Ta vekk kulepunkter i fakta -->
+        <character regexp="^n " replacement=""/>
+        <!-- Endre ligaturer og spesialtegn -->
+        <character regexp="\u2026" unicode="..."/>
+        <!-- Fjern space etter initial -->
+        <!-- ******************************************************************************************************************-->
+        <!-- Tar bort pil før saksvignett -->
+        <character regexp="\u0075" unicode="">
+            <font>Wingdings 3</font>
+        </character>
+        <!-- Tar bort mellanrum non breaking space -->
+        <character regexp="\u00A0" unicode=""/>
+        <!-- Tar bort mjuk radbrytning -->
+        <!--<character regexp="\u00AD" unicode=" "/>-->
+        <character regexp="0x000A" replacement="hej"/>
+        <!-- Tar bort fakta fyrkant -->
+        <character regexp="\u006E" unicode="">
+            <font>ITC Zapf Dingbats</font>
+        </character>
+        <!-- Tar bort fakta vingette fyrkant -->
+        <character regexp="\u007A" unicode="">
+            <font>ITC Zapf Dingbats</font>
+        </character>
+    </character-mapping>
+    <typography-mapping article-part-type-id="1" trimAroundP="true" trimWithinP="true">
+        <!-- Attributet article-part-type-id är id:t för default artikeldelstyp så man ska slippa definiera detta för alla typografier. -->
+        <!-- Attributen trumAroundP och trimWithinP definierar som man ska trimma bort tomma paragrafer före och efter en sekvens av -->
+        <!-- paragrafer med samma typografi respektive whitespace inom en paragraf. Jag exemplifierar bara headline och drophead, övriga fungerar på samma sätt-->
+        <headline>
+            <!-- Rubrik -->
+            <typography article-part-type-id="1">01 Tittel:01 Tittel A enkel</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Ingresstittel</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel A dobbel</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel A enkel</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel B</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel C</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel D2 A</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel D2 B</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel D2 C</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel D2 D</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel D2 E</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel leder</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel leder høyre</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Tittel leder kommentar</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tittel</typography>
+            <typography article-part-type-id="1">10 Vignett:10 Notisrigg-vignett</typography>
+            <!--Imported from plugin 2014-04-11 14.31.13 by Christian Lura-->
+            <typography article-part-type-id="1">01 Tittel:01 Tittel kommentar helside</typography>
+        </headline>
+        <drophead>
+            <!-- NY AVIS -->
+            <typography article-part-type-id="1">10 Vignett:10 Blikk-vignett</typography>
+            <typography article-part-type-id="1">10 Vignett:10 Vignett</typography>
+            <typography article-part-type-id="1">10 Vignett:10 Vignett streker</typography>
+            <typography article-part-type-id="1">10 Vignett:10 Vignett streker og tekst</typography>
+            <typography article-part-type-id="1">13 Anmeldelse:13 Anmeld poeng</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta undertittel</typography>
+        </drophead>
+        <preleadin>
+            <!-- Överingress -->
+            <!--Imported from plugin 2011-09-22 09.42.11 by Gunnar Backer-->
+            <typography article-part-type-id="7">10 Vignett debatt</typography>
+            <!-- NY AVIS -->
+            <typography article-part-type-id="1">10 Vignett:10 Stjernetekst</typography>
+            <typography article-part-type-id="7">10 Vignett debatt</typography>
+        </preleadin>
+        <leadin>
+            <!-- Ingress -->
+            <typography article-part-type-id="1">02 Ingress:02 Ingress A</typography>
+            <!-- NY AVIS -->
+            <typography article-part-type-id="1">02 Ingress:02 Intro rosa strek</typography>
+            <typography article-part-type-id="1">02 Ingress:02 Ingress A</typography>
+            <typography article-part-type-id="1">02 Ingress:02 Ingress B</typography>
+            <typography article-part-type-id="1">02 Ingress:02 Intro</typography>
+            <typography article-part-type-id="1">02 Ingress:02 Intro sentrert</typography>
+            <typography article-part-type-id="1">02 Ingress:02 Intro u/inngang</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Anbefaling inng</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Quiz svar</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Twittertekst</typography>
+            <typography article-part-type-id="1">13 Anmeldelse:13 Anmeld faktatekst</typography>
+            <typography>98 Bildebyline:98 Stor byline ingress</typography>
+            <!--Imported from plugin 2014-01-31 13.42.08 by Christian Lura-->
+            <typography article-part-type-id="1">01 Tittel:01 Ingresstittel D2 B</typography>
+            <!--Imported from plugin 2014-04-10 15.36.11 by Christian Lura-->
+            <typography article-part-type-id="1">02 Ingress:02 Intro rosa strek</typography>
+        </leadin>
+        <pagedateline>
+            <!-- Vinjett -->
+            <typography article-part-type-id="1">02 Saksvignett</typography>
+            <typography article-part-type-id="1">10 BTbatt tema</typography>
+            <!--Imported from plugin 2011-04-15 13.03.53 by Siren Skogedal-->
+            <typography article-part-type-id="7">15 Q vignett oransje dag</typography>
+            <!--Imported from plugin 2013-03-26 11.09.28 by Ottar Ullestad-->
+            <typography article-part-type-id="2">13 Anmeld vignett</typography>
+            <!-- NY AVIS -->
+            <typography article-part-type-id="1">02 Ingress:02 Saksvignett</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Anbefaling tema tittel</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Puls kategori</typography>
+            <typography article-part-type-id="1">10 Vignett:10 Btbattvignett</typography>
+            <typography article-part-type-id="1">13 Anmeldelse:13 Vignett S2</typography>
+        </pagedateline>
+        <madmansrow>
+            <!-- Dårrad -->
+            <!-- NY AVIS -->
+            <typography article-part-type-id="1">03 Tekst:03 Anbefaling undertittel</typography>
+            <typography article-part-type-id="1">13 Anmeldelse:13 Anmeld undertittel</typography>
+            <!--Imported from plugin 2014-07-29 15.14.44 by Wenche Lund-->
+            <typography article-part-type-id="7">03 Tekst:03 dagens anbefaling grønn</typography>
+        </madmansrow>
+        <body>
+            <!-- Brødtekst -->
+            <typography article-part-type-id="1">03 Tekst:03 Puls dag</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tall til tekst</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tall til tekst negativ</typography>
+            <typography article-part-type-id="1">08 Fakta:08 Fakta kilde</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tall</typography>
+            <!-- NY AVIS -->
+            <typography article-part-type-id="2">03 Tekst:03 Listing med tall</typography>
+            <typography article-part-type-id="2">03 Tekst:03 Puls tekst</typography>
+            <typography article-part-type-id="2">03 Tekst:03 Puls Topp 20</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Småtekst</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Småtekst inng</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Småtekst inng kolon</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Småtekst inng kolon versal</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Småtekst spørsmål m/tall</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst fet inngang</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst fet inngang initial</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst fet inngang kolon</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst fet inngang m/streker</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst kule</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst S1 kule</typography>
+            <typography article-part-type-id="1">03 Tekst:03 Tekst u/innrykk</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tall uten strek</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tekst</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tekst inngang</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tekst m/prikk</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tekst prikk fet kolon</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tekst strek</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tekst tall</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Listing med tall</typography>
+            <typography article-part-type-id="2">10 Vignett:10 Vignett småtekst sentrert</typography>
+            <typography article-part-type-id="1">11 Spørsmål:11 Spørsmål</typography>
+            <typography article-part-type-id="2">08 Fakta:08 Fakta undertittel B</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Signatur venstre</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Signatur høyre</typography>
+            <typography article-part-type-id="3">03 Tekst:03 Sitat m/signatur</typography>
+            <typography article-part-type-id="3">03 Tekst:03 Sitat</typography>
+            <typography article-part-type-id="3">03 Tekst:03 Sitat hvit</typography>
+            <typography article-part-type-id="3">03 Tekst:03 Sitat signatur</typography>
+            <typography article-part-type-id="3">08 Fakta:08 Sitat signatur</typography>
+            <typography article-part-type-id="3">08 Fakta:08 Sitat</typography>
+            <typography article-part-type-id="3">08 Fakta:08 Sitat m/signatur</typography>
+            <!--Imported from plugin 2014-01-07 14.54.52 by Wenche Lund-->
+            <typography article-part-type-id="1">01 Tittel:01 Tittel S1 B hvit</typography>
+            <!--Imported from plugin 2014-01-07 14.54.52 by Wenche Lund-->
+            <typography article-part-type-id="1">03 Tekst:03 Tekst inngang S1</typography>
+            <!--Imported from plugin 2014-01-07 14.54.52 by Wenche Lund-->
+            <typography article-part-type-id="1">03 Tekst:03 Tekst S1</typography>
+            <!--Imported from plugin 2014-01-09 10.32.58 by Wenche Lund-->
+            <typography article-part-type-id="1">03 Småtekst</typography>
+            <!--Imported from plugin 2014-01-09 10.32.58 by Wenche Lund-->
+            <typography article-part-type-id="4">12 Henvisning venstre</typography>
+            <!--Imported from plugin 2014-01-09 10.41.00 by Wenche Lund-->
+            <typography article-part-type-id="1">98 Bildebyline navn</typography>
+            <!--Imported from plugin 2014-01-28 15.05.14 by Wenche Lund-->
+            <typography article-part-type-id="4">12 Henvisning:12 Henvisning S1 høyre</typography>
+            <!--Imported from plugin 2014-03-24 14.20.35 by Siren Skogedal-->
+            <typography article-part-type-id="1">03 Tekst:03 Quiz svar inngang</typography>
+            <typography>12 Henvisning:12 Henvisning S1</typography>
+            <!--Imported from plugin 2014-04-11 14.49.46 by Christian Lura-->
+            <typography article-part-type-id="3">03 Tekst:03 Sitat ukeslutt</typography>
+            <!--Imported from plugin 2014-04-16 12.24.11 by Christian Lura-->
+            <typography article-part-type-id="2">08 Fakta:08 Fakta tekst m/prikk copy</typography>
+            <!--Imported from plugin 2014-06-02 09.29.00 by Wenche Lund-->
+            <typography article-part-type-id="1">02 Ingress A</typography>
+            <!--Imported from plugin 2014-06-02 09.29.00 by Wenche Lund-->
+            <typography article-part-type-id="1">03 Tekst:03 Sitat signatur svart</typography>
+            <!--Imported from plugin 2014-07-29 15.17.24 by Wenche Lund-->
+            <typography article-part-type-id="1">03 Tekst:03 Listing med røde tall</typography>
+        </body>
+        <dateline>
+            <!-- Ortsdatering -->
+            <typography article-part-type-id="2">08 Fakta:08 Fakta ikon tall</typography>
+        </dateline>
+        <subheadline1>
+            <!-- NY AVIS -->
+            <typography article-part-type-id="1">01 Tittel:01 Puls småtekst tittel</typography>
+            <typography article-part-type-id="1">01 Tittel:01 Småtekst tittel</typography>
+            <typography article-part-type-id="1">06 Mellom:06 Mellomtittel</typography>
+        </subheadline1>
+        <subheadline2>
+            <!-- Sitat -->
+        </subheadline2>
+        <caption>
+            <typography article-part-type-id="1">07 Bildetekst:07 Bildetekst</typography>
+            <typography article-part-type-id="1">07 Bildetekst:07 Bildetekst u/inngang</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Småtekst</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Småtekst navn</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Småtekst yrke</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Enquete navn</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Enquete yrke</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Tidslinje dato</typography>
+            <typography article-part-type-id="1">14 Enq/tidsl:14 Tidslinje mini tittel</typography>
+            <!--Imported from plugin 2014-03-20 14.09.40 by Siren Skogedal-->
+            <typography article-part-type-id="1">07 Bildetekst:07 Bildetekst byline</typography>
+        </caption>
+        <subheadline4>
+            <typography article-part-type-id="1">11 Svar</typography>
+        </subheadline4>
+        <subheadline5>
+            <!--Imported from plugin 2011-03-21 14.46.32 by Torkjell Arntzen-->
+            <typography article-part-type-id="1">10 Vignett temabyline</typography>
+        </subheadline5>
+    </typography-mapping>
+    <ignore-list>
+        <!-- Her defineres de typografiene som skal ignoreres helt, dvs filtreres fra den tilbakeførte teksten -->
+        <typography>99 Pagina avdeling</typography>
+        <typography>99 Datolinje venstre</typography>
+        <typography>99 Pagina avdeling høyre</typography>
+        <typography>17 med1</typography>
+        <typography>17 med0</typography>
+        <typography>16 Kolofon avdeling</typography>
+        <typography>15 Q bridge - 2 venstre/høyre</typography>
+        <typography>15 Q bridge - 1 topp/bunn</typography>
+        <typography>15 Q vignett hvit dag</typography>
+        <typography>17 bas2</typography>
+        <typography>17 v5 6 løpsomtale</typography>
+        <typography>17 v5 1 banker</typography>
+        <typography>17 Forslag fet</typography>
+        <typography>15 Q kryssord tekst</typography>
+        <typography>17 t01u13</typography>
+        <typography>17 HUB-kupong tynn strek</typography>
+        <typography>15 Q bridge tabell - kort</typography>
+        <typography>15 Q bridge stolpe</typography>
+        <typography>99 Datolinje høyre</typography>
+        <typography>17 HUB - 0 kampnummeret</typography>
+        <typography>17 v5 forslag 3 tabell</typography>
+        <typography>16 Kolofon navn</typography>
+        <typography>17 t01u2</typography>
+        <typography>17 v5 4 tabell</typography>
+        <typography>17 HUB-kupong fet strek</typography>
+        <typography>15 Q bildetekst</typography>
+        <typography>17 t01u1</typography>
+        <typography>17 v5 3 tabell med raster</typography>
+        <!--Imported from plugin 2011-03-15 17.58.56 by Svein Solheim-->
+        <typography>$ID/NormalParagraphStyle</typography>
+        <!--Imported from plugin 2011-03-15 17.58.56 by Svein Solheim-->
+        <typography>99 Pagina strek</typography>
+        <typography article-part-type-id="2">08 Fakta tittel</typography>
+        <!-- NY AVIS -->
+        <typography>01 Tittel:01 Tittel S1 B</typography>
+        <typography>08 Fakta:08 Fakta les mer</typography>
+        <typography>17 Tabell:17 Brannbørsen</typography>
+        <typography>17 Tabell:17 Korttoppen</typography>
+        <typography>17 Tabell:17 Tabell eliteserien bunn smal</typography>
+        <typography>17 Tabell:17 Tabell siste ti møter</typography>
+        <typography>17 Tabell:17 Tilskuertoppen</typography>
+        <typography>17 Tabell:17 Toppscorere</typography>
+        <typography>99 Datolinje høyre</typography>
+        <typography>99 Datolinje venstre</typography>
+        <typography>99 Pagina avdeling høyre</typography>
+        <typography>99 Pagina avdeling venstre</typography>
+        <typography>99 Pagina sidetall høyre</typography>
+        <typography>99 Pagina sidetall venstre</typography>
+        <typography>98 Bildebyline yrkestittel</typography>
+        <typography>13 Anmeldelse:13 Vignett S2</typography>
+        <typography>13 Anmeldelse:13 Vignett S2 rigg</typography>
+        <typography>04 Byline:04 Debatt stilling</typography>
+        <typography>04 Byline:04 Debatt stilling innlegg</typography>
+    </ignore-list>
+    <byline-list byline-type-id="1">
+        <!-- Denna lista definerer typografien som skal anvendes for å forsøke å matche byline-informasjon som navn, email, telefonnummer og tittel. -->
+        <!-- Attributten byline-type-id definerer id-ett på bylinetypen som skal anvendes som default. Man kan til og med definere dette på hver enkelt typografi for -->
+        <!-- å spesifisere en spesiell bylinetype for en viss typografi. -->
+        <!-- Attributten target-type beskriver hvilken del av bylinen som denne typography-taggen inneholder, gyldige verdier er -->
+        <!-- {none, name, email, phone, titleinfo} og default er none. None betyr at tilbakeføringen kommer til å forsøke å matche etter -->
+        <!-- namn, email og telefonnummer i texten. Merk at om man vil få det til å fungere med tittel, må man tagge det opp med titleinfo -->
+        <!-- ellers kommer tilbakeføringen med stor sannsynlighet til å matche tittelen som navn. -->
+        <!--Imported from plugin 2013-09-30 15.22.19 by Christian Lura-->
+        <typography target-type="email">04 Byline:04 Byline e-post</typography>
+        <!--Imported from plugin 2013-09-30 15.22.19 by Christian Lura-->
+        <typography target-type="name">04 Byline:04 Byline journalist e-post</typography>
+        <!-- NY AVIS -->
+        <typography>04 Byline:04 Byline illustrasjon</typography>
+        <typography>04 Byline:04 Byline journalist</typography>
+        <typography>04 Byline:04 Byline neg</typography>
+        <typography>04 Byline:04 Byline foto</typography>
+        <typography>04 Byline:04 Byline slutt</typography>
+        <typography>04 Byline:04 Byline slutt/rigg</typography>
+        <typography>04 Byline:04 Debatt navn</typography>
+        <typography>04 Byline:04 Debatt navn innlegg</typography>
+        <typography>98 Bildebyline:98 Bildebyline navn</typography>
+        <typography>98 Bildebyline:98 Bildebyline navn+</typography>
+        <typography>98 Bildebyline:98 Bildebyline tema</typography>
+        <typography target-type="email">98 Bildebyline:98 Stor byline e-post</typography>
+        <typography target-type="name">98 Bildebyline:98 Stor byline navn</typography>
+        <typography target-type="titleinfo">98 Bildebyline:98 Stor byline stillingbetegnelse</typography>
+        <typography>98 Bildebyline:98 Bildebyline yrkestittel</typography>
+        <typography>98 Bildebyline:98 Bildebyline e-post</typography>
+        <typography>04 Byline:04 Duell høyre</typography>
+        <typography>04 Byline:04 Duell venstre</typography>
+        <!--Disse skal fikses. Kommer snart -->
+        <typography>04 Bildebyline:04 Bildebyline navn</typography>
+        <typography>04 Bildebyline:04 Bildebyline navn+</typography>
+        <typography>04 Bildebyline:04 Bildebyline tema</typography>
+        <typography>04 Bildebyline:04 Stor byline e-post</typography>
+        <typography>04 Bildebyline:04 Stor byline ingress</typography>
+        <typography>04 Bildebyline:04 Stor byline navn</typography>
+        <typography>04 Bildebyline:04 Stor byline stillingbetegnelse</typography>
+        <typography>04 Bildebyline:04 Bildebyline yrkestittel</typography>
+        <typography>04 Bildebyline:04 Bildebyline e-post</typography>
+        <!--Imported from plugin 2013-11-14 13.22.13 by Christian Lura-->
+        <typography target-type="email">04 Byline e-post</typography>
+        <!--Imported from plugin 2014-04-11 14.31.13 by Christian Lura-->
+        <typography>98 Bildebyline tema</typography>
+        <!--Imported from plugin 2014-04-11 14.31.13 by Christian Lura-->
+        <typography target-type="name">98 Bildebyline e-post</typography>
+    </byline-list>
+</restore-settings>
